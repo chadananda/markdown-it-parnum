@@ -90,7 +90,7 @@ module.exports = function headerSections(md) {
         attrs.forEach( att => { if (att[0]==='pnum') parnum_prefix=att[1].trim() })
         // section number increment 
         if (classes.includes('section') || token.tag==='h2' || prefix) {
-          pnum.parnum = 1 // reset paragraph numbering regardless
+          pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
           else if (prefix === '+') pnum.paused = false
           else if (prefix) {
