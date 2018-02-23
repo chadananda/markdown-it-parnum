@@ -87,7 +87,7 @@ module.exports = function headerSections(md) {
       if (token.type == 'heading_open') {
         // check if section header
         var prefix = ''
-        attrs.forEach( att => { if (att[0]==='pnum') parnum_prefix=att[1].trim() })
+        if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() })
         // section number increment 
         if (classes.includes('section') || token.tag==='h2' || prefix) {
           pnum.parnum = 1 // reset paragraph numbering regardless 
