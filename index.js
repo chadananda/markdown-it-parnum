@@ -63,7 +63,7 @@ module.exports = function headerSections(md) {
       section_num: 0,
       prefix:      '', // 'x', '#', '-', or  
       paused:      false,
-      parnum:      0      
+      parnum:      1      
     } 
 
     
@@ -99,7 +99,7 @@ module.exports = function headerSections(md) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
-          console.log('Section detected: ', token.tag, pnum, state.tokens[i+1])
+          console.log('Section detected: ', token, pnum, state.tokens[i+1])
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
         //   i++; continue;
@@ -127,7 +127,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        console.log(token.type, num, token) 
+        console.log('Par detected:', token, num, state.tokens[i+1]) 
       } 
 
       //tokens.push(token);
