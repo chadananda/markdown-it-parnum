@@ -87,7 +87,7 @@ module.exports = function headerSections(md) {
       if (token.type == 'heading_open') {
         // check if section header
         var prefix = ''
-        attrs.forEach( att => if (att[0]==='pnum') { parnum_prefix=att[1].trim() })
+        attrs.forEach( att => { if (att[0]==='pnum') parnum_prefix=att[1].trim() })
         // section number increment 
         if (classes.includes('section') || token.tag==='h2' || prefix) {
           pnum.parnum = 1 // reset paragraph numbering regardless
@@ -122,7 +122,7 @@ module.exports = function headerSections(md) {
       
       else if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
         // remove token attr 'pnum'
-        token.attrs.forEach( (item,i) => {if (item==='pnum') delete(token.attrs[i])} )
+        token.attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
         // calculate a new pnum
         var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
         token.attrs.push( ['pnum', num] )
