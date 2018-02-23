@@ -100,6 +100,7 @@ module.exports = function headerSections(md) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
+          console.log('Section detected: ', token.tag, pnum)
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
         //   i++; continue;
@@ -119,7 +120,7 @@ module.exports = function headerSections(md) {
         // sections.push(section);
       }
       
-      if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
+      else if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
         // remove token attr 'pnum'
         token.attrs.forEach( (item,i) => {if (item==='pnum') delete(token.attrs[i])} )
         // calculate a new pnum
@@ -128,6 +129,8 @@ module.exports = function headerSections(md) {
         
         console.log(token.attrs)
       }
+      
+      else console.log(token.type)
 
       //tokens.push(token);
     }  // end for every token

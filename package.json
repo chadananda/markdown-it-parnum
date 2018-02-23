@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-parnum",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Add paragraph numbering with header cues",
   "main": "index.js",
   "dependencies": {},
