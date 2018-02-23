@@ -14,4 +14,4 @@ A markdown-it plugin providing automatic paragraph numbering
    * If a section header contains a pnum prefix, it will be used   
    * Numbering is skipped for paragraphs of types not considered content
       * (noid, ed, editor, sit, sitalcent, sig, signature, date, note, ref, reference)
-* Paragraph numering is added by inserting the the number as a num attribute in the output html -- which you can parse out or display with CSS
+* Paragraph numering is added by inserting the the number as a "pnum" attribute of the "p" tag -- which you can parse out or display with CSS

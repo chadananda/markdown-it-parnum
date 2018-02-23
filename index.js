@@ -125,6 +125,8 @@ module.exports = function headerSections(md) {
         // calculate a new pnum
         var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
         token.attrs.push( ['pnum', num] )
+        
+        console.log(token.attrs)
       }
 
       //tokens.push(token);
