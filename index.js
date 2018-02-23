@@ -128,7 +128,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        console.log(token.type, num, token.attrs) 
+        console.log(token.type, num, token) 
       } 
 
       //tokens.push(token);
