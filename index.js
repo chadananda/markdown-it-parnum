@@ -4,8 +4,7 @@ module.exports = function headerSections(md) {
   function parnum(state) {
     var tokens = [] // output
     const excludes = ['noid','sig','signature','ed','editor','sit','sitalcent','ref',
-      'reference','note','illustration'
-    ]
+      'reference','note','illustration']
     //var Token = state.Token
     //var sections = []
     //var nestedLevel = 0
@@ -120,20 +119,29 @@ module.exports = function headerSections(md) {
         // sections.push(section);
       }
       
-      if (token.type=='paragraph_open' && !pnum.paused) {
-        
+      if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
+        // remove token attr 'pnum'
+        token.attrs.forEach( (item,i) => {if (item==='pnum') delete(token.attrs[i])} )
+        // calculate a new pnum
+        var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
+        token.attrs.push( ['pnum', num] )
       }
 
-      tokens.push(token);
+      //tokens.push(token);
     }  // end for every token
     // closeAllSections();
 
-    state.tokens = tokens;
+    //state.tokens = tokens;
   }
 
   md.core.ruler.push('paragraph_numbers', parnum);
 
 };
+
+// checks if one array intersects with another array
+function intersects(items, list) { 
+  return items.filter(item => list.includes(item)).length>0
+}
 
 // function headingLevel(header) {
 //   return parseInt(header.charAt(1));
