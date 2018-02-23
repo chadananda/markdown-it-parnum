@@ -61,8 +61,7 @@ module.exports = function headerSections(md) {
     //     Each chapter is a section with most numbered 
     var pnum = {
       section_num: 0,
-      prefix:      '', // 'x', '#', '-', or 
-      pattern:     'x',
+      prefix:      '', // 'x', '#', '-', or  
       paused:      false,
       parnum:      0      
     } 
@@ -100,7 +99,7 @@ module.exports = function headerSections(md) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
-          console.log('Section detected: ', token.tag, pnum)
+          console.log('Section detected: ', token.tag, pnum, state.tokens[i+1])
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
         //   i++; continue;
@@ -120,7 +119,7 @@ module.exports = function headerSections(md) {
         // sections.push(section);
       }
       
-      else if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
+      else if (token.type=='paragraph_open' && !token.hidden && !pnum.paused && !intersects(classes, excludes)) {
         // remove token attr 'pnum'  
         if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
         // calculate a new pnum
@@ -144,7 +143,9 @@ module.exports = function headerSections(md) {
 
 // checks if one array intersects with another array
 function intersects(items, list) { 
-  return items.filter(item => list.includes(item)).length>0
+  var newlist = items.filter(item => list.includes(item))
+  if (newlist.length>0) console.log('Intersects:', newlist)
+  return newlist.length>0
 }
 
 // function headingLevel(header) {
