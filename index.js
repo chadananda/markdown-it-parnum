@@ -121,12 +121,12 @@ module.exports = function headerSections(md) {
       }
       
       else if (token.type=='paragraph_open' && !pnum.paused && !intersects(classes, excludes)) {
-        // remove token attr 'pnum'
-        token.attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
+        // remove token attr 'pnum'  
+        if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
         // calculate a new pnum
         var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
+        if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
-        
         console.log(token.attrs)
       }
       
