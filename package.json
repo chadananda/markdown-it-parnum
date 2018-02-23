@@ -1,0 +1,31 @@
+{
+  "name": "markdown-it-parnum",
+  "version": "1.0.0",
+  "description": "Add paragraph numbering with header cues",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "markdown-it": "^5.0.2",
+    "markdown-it-attrs": "^0.1.3",
+    "mocha": "^2.2.5",
+    "multiline": "^1.0.2"
+  },
+  "scripts": {
+    "test": "mocha",
+    "prepublish": "mocha"
+  },
+  "keywords": [
+    "markdown-it",
+    "markdown-it-plugin"
+  ],
+  "author": "Chad Jones",
+  "license": "MIT",
+  "homepage": "https://github.com/chadananda/markdown-it-parnum#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/chadananda/markdown-it-parnum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chadananda/markdown-it-parnum/issues"
+  }
+}
