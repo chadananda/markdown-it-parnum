@@ -127,10 +127,9 @@ module.exports = function headerSections(md) {
         var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
-        console.log(token.attrs)
-      }
       
-      else console.log(token.type)
+        console.log(token.type, num, token.attrs) 
+      } 
 
       //tokens.push(token);
     }  // end for every token
