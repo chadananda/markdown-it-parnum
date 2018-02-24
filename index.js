@@ -90,18 +90,19 @@ module.exports = function headerSections(md) {
         if (classes.includes('section') || token.tag==='h2') {
           var prefix = ''
           if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
-          console.log('Section prefix:', prefix, attrs)         
+          //console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
           else if (prefix === '+') pnum.paused = false
           else if (prefix) {
             pnum.paused = false
             pnum.prefix = prefix
+            if (Number.isInteger(prefix)) pnum.section_num = parseInt(prefix)
           } else if (!prefix && !pnum.paused) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
-          console.log('Section detected:', token, pnum, prefix, state.tokens[i+1])
+          //console.log('Section detected:', token, pnum, prefix, state.tokens[i+1])
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
         //   i++; continue;
@@ -129,7 +130,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        console.log('Paragraph detected:', token, num, state.tokens[i+1]) 
+        if (pnum.parnum===2) console.log('Paragraph detected:', token, num, state.tokens[i+1]) 
       } 
 
       //tokens.push(token);
