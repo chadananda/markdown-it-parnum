@@ -99,7 +99,7 @@ module.exports = function headerSections(md) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
-          console.log('Section detected:', token, pnum, state.tokens[i+1])
+          console.log('Section detected:', token, pnum, prefix, state.tokens[i+1])
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
         //   i++; continue;
