@@ -13,7 +13,7 @@ module.exports = function headerSections(md) {
   }
   
   function addBlockID(token) {   
-    if (token.attrs) token.attrs = []
+    if (!token.attrs) token.attrs = []
     var token_has_id = false
     token.attrs.forEach(att => {if (att[0]==='id') token_has_id = true })
     if (!token_has_id) token.attrs.push( ['id', generateUIDWithCollisionChecking()] )  
