@@ -130,7 +130,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        if (pnum.parnum===2) console.log('Paragraph detected:', token, num, state.tokens[i+1]) 
+        // if (pnum.parnum===2) console.log('Paragraph detected:', token, num, state.tokens[i+1]) 
       } 
 
       //tokens.push(token);
