@@ -128,6 +128,7 @@ module.exports = function headerSections(md) {
         if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
         // calculate a new pnum
         var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
+        if (pnum.prefix && pnum.parnum==='1') num = pnum.prefix
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
