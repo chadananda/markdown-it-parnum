@@ -132,7 +132,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        console.log('Paragraph detected:', token, state.tokens[i+1].content) 
+        if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
       } 
 
       //tokens.push(token);
