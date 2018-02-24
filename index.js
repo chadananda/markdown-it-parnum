@@ -78,7 +78,7 @@ module.exports = function headerSections(md) {
       //   closeSectionsToCurrentNesting(nestedLevel);
       // }
       
-      var attrs = tokens.attrs 
+      var attrs = token.attrs 
       var classes = []
       if (attrs) attrs.forEach( att => {if (att[0]==='class') classes=att[1].trim().split(' ')})    
 
@@ -90,7 +90,7 @@ module.exports = function headerSections(md) {
         if (classes.includes('section') || token.tag==='h2') {
           var prefix = ''
           if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
-          console.log('Section prefix:', prefix)         
+          console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
           else if (prefix === '+') pnum.paused = false
