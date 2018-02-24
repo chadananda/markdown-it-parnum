@@ -123,7 +123,9 @@ module.exports = function headerSections(md) {
         // sections.push(section);
       }
       
-      else if (token.type=='paragraph_open' && !token.hidden && !pnum.paused && !intersects(classes, excludes)) {
+      else if (token.type=='paragraph_open' && !token.hidden 
+        && !pnum.paused && !intersects(classes, excludes) 
+        && (state.tokens[i+1].content.trim().length>5)) {
         // remove token attr 'pnum'  
         if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
         // calculate a new pnum
@@ -132,7 +134,7 @@ module.exports = function headerSections(md) {
         if (!token.attrs) token.attrs = []
         token.attrs.push( ['pnum', num] )
         pnum.parnum++      
-        if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
+        //if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
       } 
 
       //tokens.push(token);
