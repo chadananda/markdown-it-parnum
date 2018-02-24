@@ -21,7 +21,7 @@ module.exports = function headerSections(md) {
 
   function setTokenPnum(token, num) { 
     if (!token.attrs) token.attrs = []
-    attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) }) 
+    token.attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) }) 
     token.attrs.push( ['pnum', num] )
   }
 
