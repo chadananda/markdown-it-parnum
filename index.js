@@ -102,6 +102,7 @@ module.exports = function headerSections(md) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
           } 
+          state.tokens[i+1].content = state.tokens[i+1].content.replace(/\{\{secnum\}\}/g, prefix)
           //console.log('Section detected:', token, pnum, prefix, state.tokens[i+1])
         } 
         // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
@@ -147,7 +148,7 @@ module.exports = function headerSections(md) {
 // checks if one array intersects with another array
 function intersects(items, list) { 
   var newlist = items.filter(item => list.includes(item))
-  if (newlist.length>0) console.log('Intersects:', newlist)
+  // if (newlist.length>0) console.log('Intersects:', newlist)
   return newlist.length>0
 }
 
