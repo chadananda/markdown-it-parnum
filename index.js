@@ -12,11 +12,17 @@ module.exports = function headerSections(md) {
     }
   }
   
-  function addBlockID(token, prefix='') {   
+  function addTokenID(token, prefix='') {   
     if (!token.attrs) token.attrs = []
     var token_has_id = false
     token.attrs.forEach(att => {if (att[0]==='id') token_has_id = true })
     if (!token_has_id) token.attrs.push( ['id', prefix+generateUIDWithCollisionChecking()] )  
+  }
+
+  function setTokenPnum(token, num) { 
+    if (!token.attrs) token.attrs = []
+    attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) }) 
+    token.attrs.push( ['pnum', num] )
   }
 
   function parnum(state) {
@@ -142,7 +148,7 @@ module.exports = function headerSections(md) {
       }
       
       else if (token.type=='paragraph_open') {
-        addBlockID(token, 'p')                
+        addTokenID(token, 'p')                
         if (!token.hidden && !pnum.paused && !intersects(classes, excludes) 
           && (state.tokens[i+1].content.trim().length>5)) {
           // remove token attr 'pnum'  
@@ -150,9 +156,8 @@ module.exports = function headerSections(md) {
 
           // calculate a new pnum
           var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
-          if (pnum.prefix && pnum.parnum==='1') num = pnum.prefix
-          if (!token.attrs) token.attrs = []
-          token.attrs.push( ['pnum', num] )
+          if (pnum.prefix && pnum.parnum===1) num = pnum.prefix 
+          setTokenPnum(token, num)
           pnum.parnum++   
         }   
         //if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
