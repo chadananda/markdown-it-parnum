@@ -1,4 +1,3 @@
-
 module.exports = function headerSections(md) {
   
   var _generatedUIDs = {};
@@ -24,49 +23,18 @@ module.exports = function headerSections(md) {
     token.attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) }) 
     token.attrs.push( ['pnum', num] )
   }
+  
+  // checks if one array intersects with another array
+  function intersects(items, list) { 
+    var newlist = items.filter(item => list.includes(item)) 
+    return newlist.length>0
+  }
 
   function parnum(state) {
     var tokens = [] // output
     const excludes = ['noid','sig','signature','ed','editor','sit','sitalcent','ref',
-      'reference','note','illustration']
-    //var Token = state.Token
-    //var sections = []
-    //var nestedLevel = 0
-    
-    // function openSection(attrs) {
-    //   var t = new Token('section_open', 'section', 1);
-    //   t.block = true;
-    //   t.attrs = attrs && attrs.map(function (attr) { return [attr[0], attr[1]] });  // copy
-    //   return t;
-    // }
-
-    // function closeSection() {
-    //   var t = new Token('section_close', 'section', -1);
-    //   t.block = true;
-    //   return t;
-    // }
-
-    // function closeSections(section) {
-    //   while (last(sections) && section.header <= last(sections).header) {
-    //     sections.pop();
-    //     tokens.push(closeSection());
-    //   }
-    // }
-
-    // function closeSectionsToCurrentNesting(nesting) {
-    //   while (last(sections) && nesting < last(sections).nesting) {
-    //     sections.pop();
-    //     tokens.push(closeSection());
-    //   }
-    // }
-
-    // function closeAllSections() {
-    //   while (sections.pop()) {
-    //     tokens.push(closeSection());
-    //   }
-    // }
-
-
+      'reference','note','illustration'] 
+      
     // Logic:
     // Every document is presumed to be numbered sequentially
     //  * A prefix pattern of numbering results when a pnum="pre" is provided
@@ -92,25 +60,13 @@ module.exports = function headerSections(md) {
 
     
     for (var i = 0, l = state.tokens.length; i < l; i++) { 
-      var token = state.tokens[i];
-
-      // record level of nesting
-      // if (token.type.search('heading') !== 0) {
-      //   nestedLevel += token.nesting;
-      // }
-      // if (last(sections) && nestedLevel < last(sections).nesting) {
-      //   closeSectionsToCurrentNesting(nestedLevel);
-      // }
-      
+      var token = state.tokens[i]      
       var attrs = token.attrs 
       var classes = []
       if (attrs) attrs.forEach( att => {if (att[0]==='class') classes=att[1].trim().split(' ')})    
 
       // check headers to see of they are sections
-      if (token.type == 'heading_open') {
-        // check if section header
-
-        // section number increment 
+      if (token.type == 'heading_open') {   
         if (classes.includes('section') || token.tag==='h2') {
           var prefix = ''
           if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
@@ -125,26 +81,8 @@ module.exports = function headerSections(md) {
           } else if (!prefix && !pnum.paused) {
             pnum.section_num++
             pnum.prefix = pnum.section_num
-          } 
-          //state.tokens[i+1].content = state.tokens[i+1].content.replace(/\{\{secnum\}\}/g, prefix)
-          //console.log('Section detected:', token, pnum, prefix, state.tokens[i+1])
-        } 
-        // if (['title','subtitle','author','copyright','copy','toc', 'notoc'].filter(ex => classes.includes(ex)).length) {
-        //   i++; continue;
-        // }   
-        // var section = {
-        //   header: headingLevel(token.tag),
-        //   nesting: nestedLevel
-        // };
-        // if (last(sections) && section.header <= last(sections).header) {
-        //   closeSections(section);
-        // }
-        // tokens.push(openSection(token.attrs));
-        // if (token.attrIndex('id') !== -1) {
-        //   // remove ID from token
-        //   token.attrs.splice(token.attrIndex('id'), 1);
-        // }
-        // sections.push(section);
+          }  
+        }  
       }
       
       else if (token.type=='paragraph_open') {
@@ -159,34 +97,12 @@ module.exports = function headerSections(md) {
           if (pnum.prefix && pnum.parnum===1) num = pnum.prefix 
           setTokenPnum(token, num)
           pnum.parnum++   
-        }   
-        //if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
-      } 
-
-      //tokens.push(token);
-    }  // end for every token
-    // closeAllSections();
-
-    //state.tokens = tokens;
+        } 
+      }  
+    }  // end for every token 
   }
 
   md.core.ruler.push('paragraph_numbers', parnum);
-
 };
 
-// checks if one array intersects with another array
-function intersects(items, list) { 
-  var newlist = items.filter(item => list.includes(item))
-  // if (newlist.length>0) console.log('Intersects:', newlist)
-  return newlist.length>0
-}
 
-
-
-// function headingLevel(header) {
-//   return parseInt(header.charAt(1));
-// }
-
-// function last(arr) {
-//   return arr.slice(-1)[0];
-// }
