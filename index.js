@@ -1,5 +1,22 @@
 
 module.exports = function headerSections(md) {
+  
+  var _generatedUIDs = {};
+  function generateUIDWithCollisionChecking() {
+    while (true) {
+      var uid = ("0000" + ((Math.random() * Math.pow(36, 4)) | 0).toString(36)).slice(-4);
+      if (!_generatedUIDs.hasOwnProperty(uid)) {
+        _generatedUIDs[uid] = true;
+        return uid;
+      }
+    }
+  }
+  
+  function addBlockID(token) {   
+    var token_has_id = false
+    if (token.attrs) token.attrs.forEach(att => {if (att[0]==='id') token_has_id = true })
+    if (!token_has_id) token.attrs.push( ['id', generateUIDWithCollisionChecking()] )  
+  }
 
   function parnum(state) {
     var tokens = [] // output
@@ -123,17 +140,20 @@ module.exports = function headerSections(md) {
         // sections.push(section);
       }
       
-      else if (token.type=='paragraph_open' && !token.hidden 
-        && !pnum.paused && !intersects(classes, excludes) 
-        && (state.tokens[i+1].content.trim().length>5)) {
-        // remove token attr 'pnum'  
-        if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
-        // calculate a new pnum
-        var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
-        if (pnum.prefix && pnum.parnum==='1') num = pnum.prefix
-        if (!token.attrs) token.attrs = []
-        token.attrs.push( ['pnum', num] )
-        pnum.parnum++      
+      else if (token.type=='paragraph_open') {
+        addBlockID(token)                
+        if (!token.hidden && !pnum.paused && !intersects(classes, excludes) 
+          && (state.tokens[i+1].content.trim().length>5)) {
+          // remove token attr 'pnum'  
+          if (attrs) attrs.forEach( (item,i) => { if (item==='pnum') delete(token.attrs[i]) })
+
+          // calculate a new pnum
+          var num = pnum.prefix ? pnum.prefix +'.'+ pnum.parnum : pnum.parnum
+          if (pnum.prefix && pnum.parnum==='1') num = pnum.prefix
+          if (!token.attrs) token.attrs = []
+          token.attrs.push( ['pnum', num] )
+          pnum.parnum++   
+        }   
         //if (state.tokens[i+1].content.trim().length<10) console.log('Empty Paragraph detected:', token, state.tokens[i+1].content) 
       } 
 
@@ -154,6 +174,8 @@ function intersects(items, list) {
   // if (newlist.length>0) console.log('Intersects:', newlist)
   return newlist.length>0
 }
+
+
 
 // function headingLevel(header) {
 //   return parseInt(header.charAt(1));
