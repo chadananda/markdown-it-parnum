@@ -12,11 +12,11 @@ module.exports = function headerSections(md) {
     }
   }
   
-  function addBlockID(token) {   
+  function addBlockID(token, prefix='') {   
     if (!token.attrs) token.attrs = []
     var token_has_id = false
     token.attrs.forEach(att => {if (att[0]==='id') token_has_id = true })
-    if (!token_has_id) token.attrs.push( ['id', generateUIDWithCollisionChecking()] )  
+    if (!token_has_id) token.attrs.push( ['id', prefix+generateUIDWithCollisionChecking()] )  
   }
 
   function parnum(state) {
@@ -142,7 +142,7 @@ module.exports = function headerSections(md) {
       }
       
       else if (token.type=='paragraph_open') {
-        addBlockID(token)                
+        addBlockID(token, 'p')                
         if (!token.hidden && !pnum.paused && !intersects(classes, excludes) 
           && (state.tokens[i+1].content.trim().length>5)) {
           // remove token attr 'pnum'  
