@@ -52,7 +52,7 @@ module.exports = function headerSections(md) {
     //   * Senario 3: GPB
     //     Each chapter is a section with most numbered 
     var pnum = {
-      section_num: 1,
+      section_num: 0,
       prefix:      '', // 'x', '#', '-', or  
       paused:      false,
       parnum:      1      
@@ -73,12 +73,13 @@ module.exports = function headerSections(md) {
           //console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
-          else if (prefix) pnum.paused = false
-          else if (prefix) {
+           //else if (prefix==='+') {pnum.paused = false; prefix=pnum.section_num;}
+          if (prefix) {
             pnum.paused = false
             pnum.prefix = prefix
             if (Number.isInteger(prefix)) pnum.section_num = parseInt(prefix)
-          } else if (!prefix && !pnum.paused) {
+          } else if (!prefix && (!pnum.paused || prefix==='+')) {
+            pnum.paused = false;
             pnum.section_num++
             pnum.prefix = pnum.section_num
           }  
