@@ -52,7 +52,7 @@ module.exports = function headerSections(md) {
     //   * Senario 3: GPB
     //     Each chapter is a section with most numbered 
     var pnum = {
-      section_num: 0,
+      section_num: 1,
       prefix:      '', // 'x', '#', '-', or  
       paused:      false,
       parnum:      1      
