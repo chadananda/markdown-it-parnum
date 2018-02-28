@@ -67,36 +67,20 @@ module.exports = function headerSections(md) {
 
       // check headers to see of they are sections
       if (token.type == 'heading_open') {   
-        //console.log('heading_open')
-        if (classes.includes('section') || token.tag==='h2') {
-          //console.log('section')
-          
+        if (classes.includes('section') || token.tag==='h2') { 
           var prefix = ''
-          if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
-          //console.log('Section prefix:', prefix, attrs)         
-          pnum.parnum = 1 // reset paragraph numbering regardless 
-          
-          console.log('New section', prefix, pnum)
-          
+          if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() })       
+          pnum.parnum = 1 // reset paragraph numbering regardless  
           if (prefix==='-') pnum.paused = true
-            else if (prefix.length) pnum.paused = false 
-            
+            else if (prefix.length) pnum.paused = false  
           // if not paused, assign a paragraph number  
-          if (!pnum.paused) {
-            
+          if (!pnum.paused) { 
             // for all non-numeric prefixes except '+'
-            if (prefix.length && !Number.isInteger(prefix) && !prefix==='+') {
-              console.log('assigned, non-numeric paragraph prefix: '+ prefix)
-              pnum.prefix = prefix  
-            } 
-            
+            if (prefix.length && !Number.isInteger(prefix) && !prefix==='+') pnum.prefix = prefix  
             // no prefix or numeric prefix
-            else { 
-              console.log('Numeric or auto prefix: ', prefix, pnum.section_num)
-              if (Number.isInteger(prefix)) {
-                pnum.section_num = parseInt(prefix)
-                console.log('Captured a paragraph number. Pnum="'+prefix+'"')
-              } else pnum.section_num++
+            else {  
+              if (Number.isInteger(prefix)) pnum.section_num = parseInt(prefix) 
+                else pnum.section_num++
               pnum.prefix = pnum.section_num
             }  
           }
