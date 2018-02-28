@@ -73,19 +73,26 @@ module.exports = function headerSections(md) {
           //console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
-           //else if (prefix==='+') {pnum.paused = false; prefix=pnum.section_num;}
-          if (prefix) {
-            pnum.paused = false
-            pnum.prefix = prefix
-            if (Number.isInteger(prefix)) {
-              pnum.section_num = parseInt(prefix)
-              console.log('Captured a paragraph number. Pnum="'+prefix+'"')
+            else if (prefix==='+') {
+              pnum.paused = false
+              prefix = ''
             }
-          } else if (!prefix && (!pnum.paused || prefix==='+')) {
-            pnum.paused = false
-            pnum.section_num++
-            pnum.prefix = pnum.section_num
-          }  
+            
+          // if not paused, assign a paragraph number  
+          if (!pnum.paused) {
+            // for all non-numeric prefixes
+            if (prefix.length && !Number.isInteger(prefix))  pnum.prefix = prefix  
+            
+            // no prefix or numeric prefix
+            else { 
+              
+              if (Number.isInteger(prefix)) {
+                pnum.section_num = parseInt(prefix)
+                console.log('Captured a paragraph number. Pnum="'+prefix+'"')
+              } else pnum.section_num++
+              pnum.prefix = pnum.section_num
+            }  
+          }
         }  
       }
       
