@@ -72,6 +72,8 @@ module.exports = function headerSections(md) {
           if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
           //console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
+          
+          console.log('New section', prefix, pnum)
           if (prefix==='-') pnum.paused = true
             else if (prefix==='+') {
               pnum.paused = false
