@@ -73,7 +73,7 @@ module.exports = function headerSections(md) {
           //console.log('Section prefix:', prefix, attrs)         
           pnum.parnum = 1 // reset paragraph numbering regardless 
           if (prefix==='-') pnum.paused = true
-          else if (prefix === '+') pnum.paused = false
+          else if (prefix) pnum.paused = false
           else if (prefix) {
             pnum.paused = false
             pnum.prefix = prefix
