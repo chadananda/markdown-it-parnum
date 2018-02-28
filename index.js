@@ -81,11 +81,14 @@ module.exports = function headerSections(md) {
           // if not paused, assign a paragraph number  
           if (!pnum.paused) {
             // for all non-numeric prefixes
-            if (prefix.length && !Number.isInteger(prefix))  pnum.prefix = prefix  
+            if (prefix.length && !Number.isInteger(prefix)) {
+              console.log('assigned, non-numeric paragraph prefix: '+ prefix)
+              pnum.prefix = prefix  
+            } 
             
             // no prefix or numeric prefix
             else { 
-              
+              console.log('Numeric or auto prefix: ', prefix, pnum.section_num)
               if (Number.isInteger(prefix)) {
                 pnum.section_num = parseInt(prefix)
                 console.log('Captured a paragraph number. Pnum="'+prefix+'"')
