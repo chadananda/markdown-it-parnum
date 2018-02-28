@@ -77,9 +77,12 @@ module.exports = function headerSections(md) {
           if (prefix) {
             pnum.paused = false
             pnum.prefix = prefix
-            if (Number.isInteger(prefix)) pnum.section_num = parseInt(prefix)
+            if (Number.isInteger(prefix)) {
+              pnum.section_num = parseInt(prefix)
+              console.log('Captured a paragraph number. Pnum="'+prefix+'"')
+            }
           } else if (!prefix && (!pnum.paused || prefix==='+')) {
-            pnum.paused = false;
+            pnum.paused = false
             pnum.section_num++
             pnum.prefix = pnum.section_num
           }  
