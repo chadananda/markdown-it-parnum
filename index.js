@@ -78,7 +78,7 @@ module.exports = function headerSections(md) {
             else if (prefix==='+') {
               pnum.paused = false
               prefix = ''
-            }
+            } 
             
           // if not paused, assign a paragraph number  
           if (!pnum.paused) {
