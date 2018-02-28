@@ -67,9 +67,9 @@ module.exports = function headerSections(md) {
 
       // check headers to see of they are sections
       if (token.type == 'heading_open') {   
-        console.log('heading_open')
+        //console.log('heading_open')
         if (classes.includes('section') || token.tag==='h2') {
-          console.log('section')
+          //console.log('section')
           
           var prefix = ''
           if (attrs) attrs.forEach( att => { if (att[0]==='pnum') prefix=att[1].trim() }) 
@@ -79,15 +79,13 @@ module.exports = function headerSections(md) {
           console.log('New section', prefix, pnum)
           
           if (prefix==='-') pnum.paused = true
-            else if (prefix==='+') {
-              pnum.paused = false
-              prefix = ''
-            } 
+            else if (prefix.length) pnum.paused = false 
             
           // if not paused, assign a paragraph number  
           if (!pnum.paused) {
-            // for all non-numeric prefixes
-            if (prefix.length && !Number.isInteger(prefix)) {
+            
+            // for all non-numeric prefixes except '+'
+            if (prefix.length && !Number.isInteger(prefix) && !prefix==='+') {
               console.log('assigned, non-numeric paragraph prefix: '+ prefix)
               pnum.prefix = prefix  
             } 
